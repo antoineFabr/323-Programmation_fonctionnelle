@@ -35,6 +35,7 @@ class Program
         List<Trackpoint> trackpoints = LireTrackpoints(gpxFilePath);
         var filter = trackpoints.Where((tp, id) => id % 5 == 0).ToList();
         filter.ForEach(x => Console.WriteLine(x));
+        Console.WriteLine(filter.Count());
        
     }
 
