@@ -40,8 +40,6 @@ if (linesA.Count() != linesB.Count())
 
 Console.WriteLine(">Fichiers chargés avec succés");
 
-var lines = File.ReadLines(pathA).ToList();
-Console.WriteLine(lines);
 // TODO: 04 Définir les fonctions de nettoyage
 // Une fonction de nettoyage reçoit un texte (une ligne de fichier) et renvoie cette même ligne adaptée
 // Il existe la fonction Replace sur les string...
@@ -71,22 +69,27 @@ bool ignoreCase = Console.ReadLine() == "o";
 if (ignoreSpaces)
 {
     linesA = linesA.Select(x => cleanSpaces(x)).ToArray();
+    linesB = linesB.Select(x => cleanSpaces(x)).ToArray();
+
 }
 
 if (ignoreTabs)
 {
     linesA = linesA.Select(x => cleanTabs(x)).ToArray();
+    linesB = linesB.Select(x => cleanTabs(x)).ToArray();
 
 }
 
 if (ignoreCase)
 {
     linesA = linesA.Select(x => enforceCase(x)).ToArray();
+    linesB = linesB.Select(x => enforceCase(x)).ToArray();
 
 }
 
 // TODO: 06 Créer et remplir une liste de LinesComparison à partir de linesA et linesB
-List<LinesComparison> comparisons = new();
+List<LinesComparison> comparisons = linesA.Zip(linesB, (a, b) => new LinesComparison(a,b)).ToList();
+
 
 // TODO: 07 Sélectionner les lignes qui ont des différences
 var diffLines = new List<LinesComparison>();
@@ -125,6 +128,12 @@ public class LinesComparison
     public string ContentA { get; set; } = "";
     public string ContentB { get; set; } = "";
 
+    public LinesComparison(string contentA, string contentB)
+    {
+        this.ContentA = contentA;
+        this.ContentB = contentB;
+
+    }
     /// <summary>
     /// Ajuste le numéro de ligne...
     /// </summary>
