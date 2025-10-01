@@ -94,7 +94,8 @@ List<LinesComparison> comparisons = linesA.Zip(linesB, (a, b) => new LinesCompar
 // TODO: 07 Sélectionner les lignes qui ont des différences
 var diffLines = comparisons.Where((x) => x.ContentA != x.ContentB).ToList();
 // TODO: 08 Afficher le nombre de lignes identiques et différentes entre les 2 fichiers
-
+Console.WriteLine("Nombre de ligne(s) differente(s) : "+diffLines.Count());
+Console.WriteLine("Nombre de ligne(s) identique(s) : " + (comparisons.Count()-diffLines.Count()));
 // TODO: 09 Définir une fonction qui compte les différences (caractères différents) entre deux textes (sera utilisé pour les 2 lignes de A et B...)
 // Pour info/rappel, la fonction Zip (comme une fermeture éclair) permet d’associer deux listes. 
 // Et pour info/rappel, un string est une liste de char...
