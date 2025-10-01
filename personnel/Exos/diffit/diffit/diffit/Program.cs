@@ -5,6 +5,9 @@
 //         Cet outil permet de comparer 2 fichiers (avec le même nombre de lignes) ligne par ligne et indiquer les différences... Il permet aussi de faire du chiffrement
 
 ///MENU
+
+using System.Reflection.Metadata.Ecma335;
+
 Console.WriteLine("+--------------------------------+");
 Console.WriteLine("|DIFFIT : A very limited DIFFTOOL|");
 Console.WriteLine("+--------------------------------+");
@@ -102,9 +105,23 @@ Console.WriteLine("Nombre de ligne(s) identique(s) : " + (comparisons.Count()-di
 // Ainsi "12345".Zip("ABCDE", (a, b) => $"{a}{b}").ToList().ForEach(Console.Write);//1A2B3C4D5E
 // ATTENTION: zip ne prend que le nombre d’éléments minimum commun entre 2 listes...
 // Ceci implique une correction: en plus du nombre de différences, il faut ajouter la différence du nombre de caractères entre les deux...
-Func<LinesComparison, int> countVariations = _ => -1;
+Func<LinesComparison, int> countVariations = x =>
+{
+    int diffCount;
+    if (x.ContentA.Count() <= x.ContentB.Count())
+    {
+        diffCount = x.ContentA.Zip(x.ContentB, (a, b) => a !=b ).Count();
+    }
+    else
+    {
+        diffCount = x.ContentB.Zip(x.ContentA, (a, b) => a != b).Count();
+    }
+
+    return diffCount;
+};
 
 // TODO: 10 Afficher pour chaque ligne différente, le nombre de variations
+
 
 /// Diff coloré
 // TODO: 11 Colorier les différences
@@ -119,7 +136,7 @@ Func<LinesComparison, int> countVariations = _ => -1;
 //saisi par l’utilisateur (clé)
 // Le contenu chiffré est enregistré sur le disque dans le fichier "cipheredA.txt"
 // Le pendant de ReadAllLines est WriteAllLines
-Console.Write("\n\nSPECIAL FEATURE: Clé de chiffrement [1-25]: ");
+Console.Write("\n\nSPECIAL FEATURE: Clé de chiffrement [1-25]: ")};
 byte key = Convert.ToByte(Console.ReadLine());
 
 public class LinesComparison
