@@ -40,9 +40,8 @@ if (linesA.Count() != linesB.Count())
 
 Console.WriteLine(">Fichiers chargés avec succés");
 
-var lines = File.ReadLines(pathA);
+var lines = File.ReadLines(pathA).ToList();
 Console.WriteLine(lines);
-var linesList = lines.ToList();
 // TODO: 04 Définir les fonctions de nettoyage
 // Une fonction de nettoyage reçoit un texte (une ligne de fichier) et renvoie cette même ligne adaptée
 // Il existe la fonction Replace sur les string...
@@ -57,6 +56,9 @@ Console.WriteLine("Choisir les options:");
 Console.Write("-Ignorer les espaces [o/n]: ");
 bool ignoreSpaces = Console.ReadLine() == "o";
 
+
+
+
 Console.Write("-Ignorer les tabulations [o/n]: ");
 bool ignoreTabs = Console.ReadLine() == "o";
 
@@ -66,7 +68,22 @@ bool ignoreCase = Console.ReadLine() == "o";
 
 
 // TODO:  05 Appliquer le nettoyage selon la demande utilisateur
+if (ignoreSpaces)
+{
+    linesA = linesA.Select(x => cleanSpaces(x)).ToArray();
+}
 
+if (ignoreTabs)
+{
+    linesA = linesA.Select(x => cleanTabs(x)).ToArray();
+
+}
+
+if (ignoreCase)
+{
+    linesA = linesA.Select(x => enforceCase(x)).ToArray();
+
+}
 
 // TODO: 06 Créer et remplir une liste de LinesComparison à partir de linesA et linesB
 List<LinesComparison> comparisons = new();
