@@ -32,7 +32,11 @@ string[] linesA = File.ReadAllLines(pathA);
 string[] linesB = File.ReadAllLines(pathB);
 
 // TODO: 03 Vérifier que les fichier ont le même nombre de lignes
-if (true)
+
+Console.WriteLine(linesB.Count());
+
+Console.WriteLine(linesA.Count());
+if (linesA.Count() != linesB.Count())
 {
     Console.WriteLine("Erreur: les fichiers n'ont pas le même nombre de ligne");
     Environment.Exit(-2);
